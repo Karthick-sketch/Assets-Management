@@ -1,34 +1,37 @@
 package com.karthick.assetsmanagement.controller;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.karthick.assetsmanagement.entity.Asset;
-import com.karthick.assetsmanagement.repository.AssetRepository;
+import com.karthick.assetsmanagement.service.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/assets")
 public class AssetsController {
     @Autowired
-    AssetRepository assetRepository;
+    AssetService assetService;
 
     @GetMapping
     public List<Asset> getAllAssets() {
-        return assetRepository.findAll();
+        return assetService.findAllAssets();
     }
 
     @GetMapping("{asset-id}")
     public Optional<Asset> getAssetById(@PathVariable("asset-id") int assetId) {
-        return assetRepository.findById(assetId);
+        return assetService.findAssetById(assetId);
     }
 
     @PostMapping
     public Asset createNewAsset(@RequestBody Asset asset) {
-        assetRepository.save(asset);
-        return asset;
+        return assetService.createNewAsset(asset);
+    }
+
+    @PatchMapping("{asset-id}")
+    public Asset updateAssetById(@PathVariable("asset-id") int id, @RequestBody Map<String, Object> json) {
+        return assetService.updateAssetByFields(id, json);
     }
 }

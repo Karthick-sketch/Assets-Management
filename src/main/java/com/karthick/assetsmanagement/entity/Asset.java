@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 @Entity(name = "assets")
 public class Asset {
@@ -15,8 +15,8 @@ public class Asset {
     private String type;
     private String name;
     private String company;
-    private float cost;
-    private LocalDateTime manufactureDate;
+    private double price;
+    private Date manufactureDate;
     private String lifetime;
 
     public int getId() {
@@ -59,19 +59,19 @@ public class Asset {
         this.company = company;
     }
 
-    public float getCost() {
-        return cost;
+    public double getPrice() {
+        return price;
     }
 
-    public void setCost(float cost) {
-        this.cost = cost;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public LocalDateTime getManufactureDate() {
+    public Date getManufactureDate() {
         return manufactureDate;
     }
 
-    public void setManufactureDate(LocalDateTime manufactureDate) {
+    public void setManufactureDate(Date manufactureDate) {
         this.manufactureDate = manufactureDate;
     }
 
@@ -91,7 +91,7 @@ public class Asset {
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", company='" + company + '\'' +
-                ", cost=" + cost +
+                ", price=" + price +
                 ", manufactureDate=" + manufactureDate +
                 ", lifetime='" + lifetime + '\'' +
                 '}';
