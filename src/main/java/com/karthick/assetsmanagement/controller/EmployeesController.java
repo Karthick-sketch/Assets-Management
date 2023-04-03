@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("employees")
+@RequestMapping("/employees")
 public class EmployeesController {
     @Autowired
     private EmployeeService employeeService;
