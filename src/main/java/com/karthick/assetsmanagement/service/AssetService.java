@@ -14,4 +14,6 @@ public interface AssetService {
     Asset createNewAsset(Asset asset);
 
     Asset updateAssetByFields(int id, Map<String, Object> fields);
+
+    void deleteAssetById(int id);
 }

@@ -34,4 +34,9 @@ public class AssetsController {
     public Asset updateAssetById(@PathVariable("asset-id") int id, @RequestBody Map<String, Object> json) {
         return assetService.updateAssetByFields(id, json);
     }
+
+    @DeleteMapping("{asset-id}")
+    public void deleteAssetById(@PathVariable("asset-id") int id) {
+        assetService.deleteAssetById(id);
+    }
 }

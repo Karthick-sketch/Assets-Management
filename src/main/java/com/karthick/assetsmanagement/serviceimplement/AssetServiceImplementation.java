@@ -43,4 +43,8 @@ public class AssetServiceImplementation implements AssetService {
         }
         return null;
     }
+
+    public void deleteAssetById(int id) {
+        assetRepository.deleteById(id);
+    }
 }

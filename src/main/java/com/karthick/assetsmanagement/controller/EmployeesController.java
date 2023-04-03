@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -27,5 +28,15 @@ public class EmployeesController {
     @PostMapping
     public Employee createNewEmployee(@RequestBody Employee employee) {
         return employeeService.createNewEmployee(employee);
+    }
+
+    @PatchMapping("{employee-id}")
+    public Employee updateEmployeeById(@PathVariable("employee-id") int id, @RequestBody Map<String, Object> updatedEmployee) {
+        return employeeService.updateEmployeeByFields(id, updatedEmployee);
+    }
+
+    @DeleteMapping("{employee-id}")
+    public void deleteEmployeeById(@PathVariable("employee-id") int id) {
+        employeeService.deleteEmployeeById(id);
     }
 }
