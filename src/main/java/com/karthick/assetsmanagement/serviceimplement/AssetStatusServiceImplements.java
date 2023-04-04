@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class AssetStatusServiceImplementation implements AssetStatusService {
+public class AssetStatusServiceImplements implements AssetStatusService {
     @Autowired
     private AssetStatusRepository assetStatusRepository;
 

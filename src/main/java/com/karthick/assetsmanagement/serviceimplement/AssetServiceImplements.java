@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class AssetServiceImplementation implements AssetService {
+public class AssetServiceImplements implements AssetService {
     @Autowired
     AssetRepository assetRepository;
 

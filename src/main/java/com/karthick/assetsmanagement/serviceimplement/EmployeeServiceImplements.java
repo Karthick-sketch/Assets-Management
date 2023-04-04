@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class EmployeeServiceImplementation implements EmployeeService {
+public class EmployeeServiceImplements implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
