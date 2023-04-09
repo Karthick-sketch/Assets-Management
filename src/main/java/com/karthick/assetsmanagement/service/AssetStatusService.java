@@ -1,19 +1,19 @@
 package com.karthick.assetsmanagement.service;
 
+import com.karthick.assetsmanagement.common.ApiResponse;
 import com.karthick.assetsmanagement.entity.AssetStatus;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface AssetStatusService {
     List<AssetStatus> findAllAssetStatus();
 
-    Optional<AssetStatus> findAssetStatusById(int id);
+    ApiResponse findAssetStatusById(int id);
 
-    AssetStatus createNewAssetStatus(AssetStatus assetStatus);
+    ApiResponse createNewAssetStatus(AssetStatus assetStatus);
 
-    AssetStatus updateAssetStatusByFields(int id, Map<String, Object> fields);
+    ApiResponse updateAssetStatusByFields(int id, Map<String, Object> fields);
 
     void deleteAssetStatusById(int id);
 }

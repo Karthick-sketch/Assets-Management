@@ -1,13 +1,14 @@
 package com.karthick.assetsmanagement.controller;
 
+import com.karthick.assetsmanagement.common.ApiResponse;
 import com.karthick.assetsmanagement.entity.AssetStatus;
 import com.karthick.assetsmanagement.service.AssetStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/assetstatus")
@@ -21,18 +22,21 @@ public class AssetStatusController {
     }
 
     @GetMapping("{asset-status-id}")
-    public Optional<AssetStatus> getAssetStatusById(@PathVariable("asset-status-id") int id) {
-        return assetStatusService.findAssetStatusById(id);
+    public ResponseEntity<ApiResponse> getAssetStatusById(@PathVariable("asset-status-id") int id) {
+        ApiResponse apiResponse = assetStatusService.findAssetStatusById(id);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PostMapping
-    public AssetStatus creatNewAssetStatus(@RequestBody AssetStatus assetStatus) {
-        return assetStatusService.createNewAssetStatus(assetStatus);
+    public ResponseEntity<ApiResponse> creatNewAssetStatus(@RequestBody AssetStatus assetStatus) {
+        ApiResponse apiResponse = assetStatusService.createNewAssetStatus(assetStatus);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PatchMapping("{asset-status-id}")
-    public AssetStatus updateAssetStatusById(@PathVariable("asset-status-id") int id, @RequestBody Map<String, Object> updatedAssetStatus) {
-        return assetStatusService.updateAssetStatusByFields(id, updatedAssetStatus);
+    public ResponseEntity<ApiResponse> updateAssetStatusById(@PathVariable("asset-status-id") int id, @RequestBody Map<String, Object> updatedAssetStatus) {
+        ApiResponse apiResponse = assetStatusService.updateAssetStatusByFields(id, updatedAssetStatus);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @DeleteMapping("{asset-status-id}")

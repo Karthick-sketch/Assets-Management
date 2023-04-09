@@ -29,7 +29,7 @@ public class UserServiceImplements implements UserService {
         ApiResponse apiResponse = new ApiResponse();
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
-            throw new NoSuchElementException("expecting asset is not found");
+            throw new NoSuchElementException("expecting user is not found");
         }
         apiResponse.setData(user.get());
         return apiResponse;
@@ -49,7 +49,7 @@ public class UserServiceImplements implements UserService {
     public ApiResponse updateUserByFields(int id, Map<String, Object> fields) {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
-            throw new NoSuchElementException("expecting asset is not found");
+            throw new NoSuchElementException("expecting user is not found");
         }
         ApiResponse apiResponse = new ApiResponse();
         try {

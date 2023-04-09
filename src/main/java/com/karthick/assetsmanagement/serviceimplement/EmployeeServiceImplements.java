@@ -30,7 +30,7 @@ public class EmployeeServiceImplements implements EmployeeService {
         ApiResponse apiResponse = new ApiResponse();
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isEmpty()) {
-            throw new NoSuchElementException("expecting asset is not found");
+            throw new NoSuchElementException("expecting employee is not found");
         }
         apiResponse.setData(employee.get());
         return apiResponse;
@@ -50,7 +50,7 @@ public class EmployeeServiceImplements implements EmployeeService {
     public ApiResponse updateEmployeeByFields(int id, Map<String, Object> fields) {
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isEmpty()) {
-            throw new NoSuchElementException("expecting asset is not found");
+            throw new NoSuchElementException("expecting employee is not found");
         }
         ApiResponse apiResponse = new ApiResponse();
         try {

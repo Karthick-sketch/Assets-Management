@@ -1,5 +1,7 @@
 package com.karthick.assetsmanagement.serviceimplement;
 
+import com.karthick.assetsmanagement.common.ApiResponse;
+import com.karthick.assetsmanagement.common.BadRequestException;
 import com.karthick.assetsmanagement.entity.AssetStatus;
 import com.karthick.assetsmanagement.repository.AssetStatusRepository;
 import com.karthick.assetsmanagement.service.AssetStatusService;
@@ -11,6 +13,7 @@ import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -22,18 +25,34 @@ public class AssetStatusServiceImplements implements AssetStatusService {
         return assetStatusRepository.findAll();
     }
 
-    public Optional<AssetStatus> findAssetStatusById(int id) {
-        return assetStatusRepository.findById(id);
+    public ApiResponse findAssetStatusById(int id) {
+        ApiResponse apiResponse = new ApiResponse();
+        Optional<AssetStatus> employee = assetStatusRepository.findById(id);
+        if (employee.isEmpty()) {
+            throw new NoSuchElementException("expecting asset status is not found");
+        }
+        apiResponse.setData(employee.get());
+        return apiResponse;
     }
 
-    public AssetStatus createNewAssetStatus(AssetStatus assetStatus) {
-        assetStatus.setCreatedAt(LocalDateTime.now());
-        return assetStatusRepository.save(assetStatus);
+    public ApiResponse createNewAssetStatus(AssetStatus assetStatus) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            assetStatus.setCreatedAt(LocalDateTime.now());
+            apiResponse.setData(assetStatusRepository.save(assetStatus));
+        } catch (AssertionError e) {
+            throw new BadRequestException(e.getMessage());
+        }
+        return apiResponse;
     }
 
-    public AssetStatus updateAssetStatusByFields(int id, Map<String, Object> fields) {
+    public ApiResponse updateAssetStatusByFields(int id, Map<String, Object> fields) {
         Optional<AssetStatus> assetStatus = assetStatusRepository.findById(id);
-        if (assetStatus.isPresent()) {
+        if (assetStatus.isEmpty()) {
+            throw new NoSuchElementException("expecting asset status is not found");
+        }
+        ApiResponse apiResponse = new ApiResponse();
+        try {
             fields.forEach((key, value) -> {
                 Field field = ReflectionUtils.findField(AssetStatus.class, key);
                 if (field != null) {
@@ -41,9 +60,11 @@ public class AssetStatusServiceImplements implements AssetStatusService {
                     ReflectionUtils.setField(field, assetStatus.get(), value);
                 }
             });
-            return assetStatusRepository.save(assetStatus.get());
+            apiResponse.setData(assetStatusRepository.save(assetStatus.get()));
+        } catch (AssertionError e) {
+            throw new BadRequestException(e.getMessage());
         }
-        return null;
+        return apiResponse;
     }
 
     public void deleteAssetStatusById(int id) {
