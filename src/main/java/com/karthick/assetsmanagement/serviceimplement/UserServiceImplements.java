@@ -1,7 +1,7 @@
 package com.karthick.assetsmanagement.serviceimplement;
 
 import com.karthick.assetsmanagement.common.ApiResponse;
-import com.karthick.assetsmanagement.common.BadRequestException;
+import com.karthick.assetsmanagement.exception.BadRequestException;
 import com.karthick.assetsmanagement.entity.User;
 import com.karthick.assetsmanagement.repository.UserRepository;
 import com.karthick.assetsmanagement.service.UserService;

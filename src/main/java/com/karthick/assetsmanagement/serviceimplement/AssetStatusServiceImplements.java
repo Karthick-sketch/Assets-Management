@@ -1,7 +1,7 @@
 package com.karthick.assetsmanagement.serviceimplement;
 
 import com.karthick.assetsmanagement.common.ApiResponse;
-import com.karthick.assetsmanagement.common.BadRequestException;
+import com.karthick.assetsmanagement.exception.BadRequestException;
 import com.karthick.assetsmanagement.entity.AssetStatus;
 import com.karthick.assetsmanagement.repository.AssetStatusRepository;
 import com.karthick.assetsmanagement.service.AssetStatusService;
