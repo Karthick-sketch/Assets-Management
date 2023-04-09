@@ -1,13 +1,14 @@
 package com.karthick.assetsmanagement.controller;
 
+import com.karthick.assetsmanagement.common.ApiResponse;
 import com.karthick.assetsmanagement.entity.Asset;
 import com.karthick.assetsmanagement.service.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/assets")
@@ -21,18 +22,21 @@ public class AssetsController {
     }
 
     @GetMapping("{asset-id}")
-    public Optional<Asset> getAssetById(@PathVariable("asset-id") int assetId) {
-        return assetService.findAssetById(assetId);
+    public ResponseEntity<ApiResponse> getAssetById(@PathVariable("asset-id") int assetId) {
+        ApiResponse apiResponse = assetService.findAssetById(assetId);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PostMapping
-    public Asset createNewAsset(@RequestBody Asset asset) {
-        return assetService.createNewAsset(asset);
+    public ResponseEntity<ApiResponse> createNewAsset(@RequestBody Asset asset) {
+        ApiResponse apiResponse = assetService.createNewAsset(asset);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PatchMapping("{asset-id}")
-    public Asset updateAssetById(@PathVariable("asset-id") int id, @RequestBody Map<String, Object> json) {
-        return assetService.updateAssetByFields(id, json);
+    public ResponseEntity<ApiResponse> updateAssetById(@PathVariable("asset-id") int id, @RequestBody Map<String, Object> json) {
+        ApiResponse apiResponse = assetService.updateAssetByFields(id, json);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @DeleteMapping("{asset-id}")

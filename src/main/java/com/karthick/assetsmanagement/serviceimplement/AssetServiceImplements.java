@@ -1,5 +1,7 @@
 package com.karthick.assetsmanagement.serviceimplement;
 
+import com.karthick.assetsmanagement.common.ApiResponse;
+import com.karthick.assetsmanagement.common.BadRequestException;
 import com.karthick.assetsmanagement.entity.Asset;
 import com.karthick.assetsmanagement.repository.AssetRepository;
 import com.karthick.assetsmanagement.service.AssetService;
@@ -10,6 +12,7 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -21,17 +24,33 @@ public class AssetServiceImplements implements AssetService {
         return assetRepository.findAll();
     }
 
-    public Optional<Asset> findAssetById(int id) {
-        return assetRepository.findById(id);
-    }
-
-    public Asset createNewAsset(Asset asset) {
-        return assetRepository.save(asset);
-    }
-
-    public Asset updateAssetByFields(int id, Map<String, Object> fields) {
+    public ApiResponse findAssetById(int id) {
+        ApiResponse apiResponse = new ApiResponse();
         Optional<Asset> asset = assetRepository.findById(id);
-        if (asset.isPresent()) {
+        if (asset.isEmpty()) {
+            throw new NoSuchElementException("expecting asset is not found");
+        }
+        apiResponse.setData(asset.get());
+        return apiResponse;
+    }
+
+    public ApiResponse createNewAsset(Asset asset) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            apiResponse.setData(assetRepository.save(asset));
+        } catch (AssertionError e) {
+            throw new BadRequestException(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse updateAssetByFields(int id, Map<String, Object> fields) {
+        Optional<Asset> asset = assetRepository.findById(id);
+        if (asset.isEmpty()) {
+            throw new NoSuchElementException("expecting asset is not found");
+        }
+        ApiResponse apiResponse = new ApiResponse();
+        try {
             fields.forEach((key, value) -> {
                 Field field = ReflectionUtils.findField(Asset.class, key);
                 if (field != null) {
@@ -39,9 +58,11 @@ public class AssetServiceImplements implements AssetService {
                     ReflectionUtils.setField(field, asset.get(), value);
                 }
             });
-            return assetRepository.save(asset.get());
+            apiResponse.setData(assetRepository.save(asset.get()));
+        } catch (AssertionError e) {
+            throw new BadRequestException(e.getMessage());
         }
-        return null;
+        return apiResponse;
     }
 
     public void deleteAssetById(int id) {
