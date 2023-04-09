@@ -1,5 +1,7 @@
 package com.karthick.assetsmanagement.serviceimplement;
 
+import com.karthick.assetsmanagement.common.ApiResponse;
+import com.karthick.assetsmanagement.common.BadRequestException;
 import com.karthick.assetsmanagement.entity.User;
 import com.karthick.assetsmanagement.repository.UserRepository;
 import com.karthick.assetsmanagement.service.UserService;
@@ -11,6 +13,7 @@ import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -22,18 +25,34 @@ public class UserServiceImplements implements UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findUserById(int id) {
-        return userRepository.findById(id);
-    }
-
-    public User createNewUser(User user) {
-        user.setCreatedAt(LocalDateTime.now());
-        return userRepository.save(user);
-    }
-
-    public User updateUserByFields(int id, Map<String, Object> fields) {
+    public ApiResponse findUserById(int id) {
+        ApiResponse apiResponse = new ApiResponse();
         Optional<User> user = userRepository.findById(id);
-        if (user.isPresent()) {
+        if (user.isEmpty()) {
+            throw new NoSuchElementException("expecting asset is not found");
+        }
+        apiResponse.setData(user.get());
+        return apiResponse;
+    }
+
+    public ApiResponse createNewUser(User user) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            user.setCreatedAt(LocalDateTime.now());
+            apiResponse.setData(userRepository.save(user));
+        } catch (AssertionError e) {
+            throw new BadRequestException(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse updateUserByFields(int id, Map<String, Object> fields) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new NoSuchElementException("expecting asset is not found");
+        }
+        ApiResponse apiResponse = new ApiResponse();
+        try {
             fields.forEach((key, value) -> {
                 Field field = ReflectionUtils.findField(User.class, key);
                 if (field != null) {
@@ -41,9 +60,11 @@ public class UserServiceImplements implements UserService {
                     ReflectionUtils.setField(field, user.get(), value);
                 }
             });
-            return userRepository.save(user.get());
+            apiResponse.setData(userRepository.save(user.get()));
+        } catch (AssertionError e) {
+            throw new BadRequestException(e.getMessage());
         }
-        return null;
+        return apiResponse;
     }
 
     public void deleteUserById(int id) {
