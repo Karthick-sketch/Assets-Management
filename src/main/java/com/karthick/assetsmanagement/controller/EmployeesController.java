@@ -1,13 +1,14 @@
 package com.karthick.assetsmanagement.controller;
 
+import com.karthick.assetsmanagement.common.ApiResponse;
 import com.karthick.assetsmanagement.entity.Employee;
 import com.karthick.assetsmanagement.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/employees")
@@ -21,18 +22,21 @@ public class EmployeesController {
     }
 
     @GetMapping("{employee-id}")
-    public Optional<Employee> getEmployeeById(@PathVariable("employee-id") int id) {
-        return employeeService.findEmployeeById(id);
+    public ResponseEntity<ApiResponse> getEmployeeById(@PathVariable("employee-id") int id) {
+        ApiResponse apiResponse = employeeService.findEmployeeById(id);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PostMapping
-    public Employee createNewEmployee(@RequestBody Employee employee) {
-        return employeeService.createNewEmployee(employee);
+    public ResponseEntity<ApiResponse> createNewEmployee(@RequestBody Employee employee) {
+        ApiResponse apiResponse = employeeService.createNewEmployee(employee);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PatchMapping("{employee-id}")
-    public Employee updateEmployeeById(@PathVariable("employee-id") int id, @RequestBody Map<String, Object> updatedEmployee) {
-        return employeeService.updateEmployeeByFields(id, updatedEmployee);
+    public ResponseEntity<ApiResponse> updateEmployeeById(@PathVariable("employee-id") int id, @RequestBody Map<String, Object> updatedEmployee) {
+        ApiResponse apiResponse = employeeService.updateEmployeeByFields(id, updatedEmployee);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @DeleteMapping("{employee-id}")

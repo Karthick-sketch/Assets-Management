@@ -1,5 +1,8 @@
 package com.karthick.assetsmanagement.serviceimplement;
 
+import com.karthick.assetsmanagement.common.ApiResponse;
+import com.karthick.assetsmanagement.common.BadRequestException;
+import com.karthick.assetsmanagement.entity.Asset;
 import com.karthick.assetsmanagement.entity.Employee;
 import com.karthick.assetsmanagement.repository.EmployeeRepository;
 import com.karthick.assetsmanagement.service.EmployeeService;
@@ -11,6 +14,7 @@ import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -22,28 +26,46 @@ public class EmployeeServiceImplements implements EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Optional<Employee> findEmployeeById(int id) {
-        return employeeRepository.findById(id);
-    }
-
-    public Employee createNewEmployee(Employee employee) {
-        employee.setCreatedAt(LocalDateTime.now());
-        return employeeRepository.save(employee);
-    }
-
-    public Employee updateEmployeeByFields(int id, Map<String, Object> fields) {
+    public ApiResponse findEmployeeById(int id) {
+        ApiResponse apiResponse = new ApiResponse();
         Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isPresent()) {
+        if (employee.isEmpty()) {
+            throw new NoSuchElementException("expecting asset is not found");
+        }
+        apiResponse.setData(employee.get());
+        return apiResponse;
+    }
+
+    public ApiResponse createNewEmployee(Employee employee) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            employee.setCreatedAt(LocalDateTime.now());
+            apiResponse.setData(employeeRepository.save(employee));
+        } catch (AssertionError e) {
+            throw new BadRequestException(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse updateEmployeeByFields(int id, Map<String, Object> fields) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isEmpty()) {
+            throw new NoSuchElementException("expecting asset is not found");
+        }
+        ApiResponse apiResponse = new ApiResponse();
+        try {
             fields.forEach((key, value) -> {
-                Field field = ReflectionUtils.findField(Employee.class, key);
+                Field field = ReflectionUtils.findField(Asset.class, key);
                 if (field != null) {
                     field.setAccessible(true);
                     ReflectionUtils.setField(field, employee.get(), value);
                 }
             });
-            return employeeRepository.save(employee.get());
+            apiResponse.setData(employeeRepository.save(employee.get()));
+        } catch (AssertionError e) {
+            throw new BadRequestException(e.getMessage());
         }
-        return null;
+        return apiResponse;
     }
 
     public void deleteEmployeeById(int id) {
