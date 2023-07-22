@@ -31,10 +31,12 @@ java -jar build/libs/assetsmanagement-0.0.1-SNAPSHOT.jar
 
 ### Assets APIs
 
+Fetch Asset record by ID
 ```sh
 curl -XGET 'http://localhost:8080/assets/{asset-id}'
 ```
 
+Create a new Asset record
 ```sh
 curl --location 'localhost:8080/assets' \
 --header 'Accept: application/json' \
@@ -51,6 +53,7 @@ curl --location 'localhost:8080/assets' \
 }'
 ```
 
+Update an Asset fields by ID
 ```sh
 curl --location --request PATCH 'localhost:8080/assets/{asset-id}' \
 --header 'Accept: application/json' \
@@ -60,6 +63,7 @@ curl --location --request PATCH 'localhost:8080/assets/{asset-id}' \
 }'
 ```
 
+Delete an Asset record by ID
 ```sh
 curl -XDELETE 'http://localhost:8080/assets/{asset-id}'
 ```
@@ -67,10 +71,12 @@ curl -XDELETE 'http://localhost:8080/assets/{asset-id}'
 
 ### Asset Status APIs
 
+Fetch an AssetStatus record by ID
 ```sh
 curl -XGET 'http://localhost:8080/assetstatus/{asset-status-id}'
 ```
 
+Create a new AssetStatus record
 ```sh
 curl --location 'localhost:8080/assetstatus' \
 --header 'Accept: application/json' \
@@ -83,6 +89,7 @@ curl --location 'localhost:8080/assetstatus' \
 }'
 ```
 
+Update an AssetStatus fields by ID
 ```sh
 curl --location --request PATCH 'localhost:8080/assetstatus/{asset-status-id}' \
 --header 'Accept: application/json' \
@@ -92,6 +99,7 @@ curl --location --request PATCH 'localhost:8080/assetstatus/{asset-status-id}' \
 }'
 ```
 
+Delete an AssetStatus record by ID
 ```sh
 curl -XDELETE 'http://localhost:8080/assetstatus/{asset-status-id}'
 ```
@@ -99,10 +107,12 @@ curl -XDELETE 'http://localhost:8080/assetstatus/{asset-status-id}'
 
 ### Employees APIs
 
+Fetch an Employee record by ID
 ```sh
 curl -XGET 'http://localhost:8080/employees/{employee-id}'
 ```
 
+Create a new Employee record
 ```sh
 curl --location 'localhost:8080/employees' \
 --header 'Accept: application/json' \
@@ -121,6 +131,7 @@ curl --location 'localhost:8080/employees' \
 }'
 ```
 
+Update an Employee fields by ID
 ```sh
 curl --location --request PATCH 'localhost:8080/employees/{employee-id}' \
 --header 'Accept: application/json' \
@@ -130,6 +141,7 @@ curl --location --request PATCH 'localhost:8080/employees/{employee-id}' \
 }'
 ```
 
+Delete an Employee record by ID
 ```sh
 curl -XDELETE 'http://localhost:8080/employees/{employee-id}'
 ```
@@ -137,14 +149,17 @@ curl -XDELETE 'http://localhost:8080/employees/{employee-id}'
 
 ### Users APIs
 
+Fetch all Users records
 ```sh
 curl -XGET 'http://localhost:8080/users'
 ```
 
+Fetch a User record by ID
 ```sh
 curl -XGET 'http://localhost:8080/users/{user-id}'
 ```
 
+Create a new User record
 ```sh
 curl --location 'localhost:8080/users' \
 --header 'Accept: application/json' \
@@ -156,6 +171,7 @@ curl --location 'localhost:8080/users' \
 }'
 ```
 
+Update a User fields by ID
 ```sh
 curl --location --request PATCH 'localhost:8080/users/{user-id}' \
 --header 'Accept: application/json' \
@@ -165,6 +181,7 @@ curl --location --request PATCH 'localhost:8080/users/{user-id}' \
 }'
 ```
 
+Delete a User record by ID
 ```sh
 curl -XDELETE 'http://localhost:8080/users/{user-id}'
 ```
