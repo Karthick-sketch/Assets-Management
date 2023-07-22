@@ -17,7 +17,7 @@ public class Asset {
     private String company;
     private double price;
     private Date manufactureDate;
-    private int warranty;
+    private String warranty;
     private String lifetime;
 
     public int getId() {
@@ -76,11 +76,11 @@ public class Asset {
         this.manufactureDate = manufactureDate;
     }
 
-    public int getWarranty() {
+    public String getWarranty() {
         return warranty;
     }
 
-    public void setWarranty(int warranty) {
+    public void setWarranty(String warranty) {
         this.warranty = warranty;
     }
 
@@ -96,14 +96,14 @@ public class Asset {
     public String toString() {
         return "Asset{" +
                 "id=" + id +
-                ", serialNumber='" + serialNumber + '\'' +
-                ", type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                ", company='" + company + '\'' +
+                ", serialNumber='" + serialNumber + "'" +
+                ", type='" + type + "'" +
+                ", name='" + name + "'" +
+                ", company='" + company + "'" +
                 ", price=" + price +
                 ", manufactureDate=" + manufactureDate +
                 ", warranty=" + warranty +
-                ", lifetime='" + lifetime + '\'' +
+                ", lifetime='" + lifetime + "'" +
                 '}';
     }
 }
