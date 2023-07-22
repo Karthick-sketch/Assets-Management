@@ -17,6 +17,7 @@ public class Asset {
     private String company;
     private double price;
     private Date manufactureDate;
+    private int warranty;
     private String lifetime;
 
     public int getId() {
@@ -75,6 +76,14 @@ public class Asset {
         this.manufactureDate = manufactureDate;
     }
 
+    public int getWarranty() {
+        return warranty;
+    }
+
+    public void setWarranty(int warranty) {
+        this.warranty = warranty;
+    }
+
     public String getLifetime() {
         return lifetime;
     }
@@ -93,6 +102,7 @@ public class Asset {
                 ", company='" + company + '\'' +
                 ", price=" + price +
                 ", manufactureDate=" + manufactureDate +
+                ", warranty=" + warranty +
                 ", lifetime='" + lifetime + '\'' +
                 '}';
     }

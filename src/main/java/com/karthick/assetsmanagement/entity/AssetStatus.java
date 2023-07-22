@@ -13,7 +13,7 @@ public class AssetStatus {
     private int id;
     private int employeeId;
     private int assetId;
-    private int issuedBy;
+    private int issuedBy; // user who issued the asset to employee
     private String status;
     private LocalDateTime createdAt;
 

@@ -11,11 +11,15 @@ public class Employee {
     @Id
     @GeneratedValue
     private int id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String phoneNumber;
-    private String role;
+    private String designation;
+    private int managerId;
+    private String team;
     private String department;
+    private int hrId;
     private boolean isActive;
     private LocalDateTime createdAt;
 
@@ -27,12 +31,20 @@ public class Employee {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -51,12 +63,28 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getRole() {
-        return role;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 
     public String getDepartment() {
@@ -67,12 +95,20 @@ public class Employee {
         this.department = department;
     }
 
-    public boolean isIsActive() {
+    public int getHrId() {
+        return hrId;
+    }
+
+    public void setHrId(int hrId) {
+        this.hrId = hrId;
+    }
+
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -87,11 +123,15 @@ public class Employee {
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", name='" + name + "'" +
+                ", firstName='" + firstName + "'" +
+                ", lastName='" + lastName + "'" +
                 ", email='" + email + "'" +
                 ", phoneNumber='" + phoneNumber + "'" +
-                ", role='" + role + "'" +
+                ", designation='" + designation + "'" +
+                ", managerId=" + managerId +
+                ", team='" + team + "'" +
                 ", department='" + department + "'" +
+                ", hrId=" + hrId +
                 ", isActive=" + isActive +
                 ", createdAt=" + createdAt +
                 '}';
